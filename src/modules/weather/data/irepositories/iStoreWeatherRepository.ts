@@ -10,5 +10,5 @@ id: string
 }
 export interface iStoreWeatherRepository {
     storeWeather(params: WeatherStoreParams):Promise<void>,
-    findConsultByName(cityId: string): Promise<WeatherStoreParams>
+    findConsultById(cityId: string): Promise<WeatherStoreParams>
 }

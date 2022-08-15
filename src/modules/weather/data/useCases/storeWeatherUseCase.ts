@@ -1,14 +1,17 @@
 import { EmptyFieldError } from '../../../../global/errors/emptyFieldError';
 import { Weather } from '../../domain/entities/weather';
 import { iStoreWeatherUseCase } from '../../domain/iuseCases/istoreWeatherUseCase';
+import { iStoreWeatherRepository } from '../irepositories/iStoreWeatherRepository';
 
 export class StoreWeatherUseCase implements iStoreWeatherUseCase {
+  constructor (private repository: iStoreWeatherRepository) {}
   async execute (params:Weather): Promise<void> {
     if (!params.city) { throw new EmptyFieldError('params.city'); }
     if (!params.actualTemperature) { throw new EmptyFieldError('params.actualTemperature'); }
     if (!params.minTemperature) { throw new EmptyFieldError('params.minTemperature'); }
     if (!params.maxTemperature) { throw new EmptyFieldError('params.maxTemperature'); }
 
+    await this.repository.findConsultById(params.cityId);
     throw new Error('Method not implemented.');
   }
 }
