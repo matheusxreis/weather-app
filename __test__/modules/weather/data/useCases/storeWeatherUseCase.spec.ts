@@ -97,6 +97,21 @@ describe('StoreWeatherUseCase', () => {
 
     expect(async () => await sut.execute(wrongParams)).rejects.toThrow(new EmptyFieldError('params.maxTemperature'));
   });
+  it('should throws EmptyFieldError if params.cityId is empty', async () => {
+    const { sut } = makeSut();
+
+    const wrongParams = {
+      city: 'SP',
+      actualTemperature: 'string',
+      minTemperature: 'string',
+      maxTemperature: 'string',
+      iconId: 'string',
+      photo: 'string',
+      cityId: ''
+    };
+
+    expect(async () => await sut.execute(wrongParams)).rejects.toThrow(new EmptyFieldError('params.cityId'));
+  });
   it('should findConsultById method receive right city id', async () => {
     const { sut, repository } = makeSut();
 
