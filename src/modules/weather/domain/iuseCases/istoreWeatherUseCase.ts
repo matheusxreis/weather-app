@@ -1,10 +1,10 @@
 import { Weather } from '../entities/weather';
 
-type StoreWeatherParams = {
-    city:string,
+export type StoreWeatherParams = {
+    cityId:string,
     weather:Weather
 }
 
 export interface iStoreWeatherUseCase {
-execute(params: StoreWeatherParams):Promise<void>
+execute(params: Weather):Promise<void>
 }
