@@ -150,4 +150,41 @@ describe('StoreWeatherUseCase', () => {
     expect(repository.updateConsult).toBeCalledWith(rightParams);
     expect(repository.storeWeather).not.toBeCalled();
   });
+  it('should throws if findConsultById throws repository method throws', async () => {
+    const repository = {
+      findConsultById: () => { throw new Error(); },
+      storeWeather: jest.fn(),
+      updateConsult: jest.fn()
+    };
+    const sut = new StoreWeatherUseCase(repository);
+    expect(async () => await sut.execute(params))
+      .rejects
+      .toThrow();
+  });
+  it('should throws if storeWeather repository method throws', async () => {
+    const repository = {
+      findConsultById: jest.fn(async () => await new Promise<WeatherStoreParams|null>((resolve, reject) => {
+        resolve(null);
+      })),
+      storeWeather: () => { throw new Error(); },
+      updateConsult: jest.fn()
+    };
+    const sut = new StoreWeatherUseCase(repository);
+    expect(async () => await sut.execute(params))
+      .rejects
+      .toThrow();
+  });
+  it('should throws if updateConsult repository method throws', async () => {
+    const repository = {
+      findConsultById: jest.fn(async () => await new Promise<WeatherStoreParams|null>((resolve, reject) => {
+        resolve(dataDB);
+      })),
+      storeWeather: jest.fn(),
+      updateConsult: () => { throw new Error(); }
+    };
+    const sut = new StoreWeatherUseCase(repository);
+    expect(async () => await sut.execute(params))
+      .rejects
+      .toThrow();
+  });
 });
