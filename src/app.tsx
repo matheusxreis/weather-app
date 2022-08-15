@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Box } from './box';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import { GlobalStyle } from './styles/global';
@@ -21,7 +20,6 @@ export default function App () {
         <h3> {counter} </h3>
         <button onClick={() => incrementCounter()}> increment </button>
         <button onClick={() => decrementCounter()}> decrement </button>
-    <Box />
     <GlobalStyle />
 
     </ThemeProvider>
