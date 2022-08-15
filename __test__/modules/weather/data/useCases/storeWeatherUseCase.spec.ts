@@ -14,10 +14,11 @@ const dataDB = {
 
 const makeSut = () => {
   const repository = {
-    findConsultById: jest.fn(async () => await new Promise<WeatherStoreParams>((resolve, reject) => {
-      resolve(dataDB);
+    findConsultById: jest.fn(async () => await new Promise<WeatherStoreParams|null>((resolve, reject) => {
+      resolve(null);
     })),
-    storeWeather: jest.fn()
+    storeWeather: jest.fn(),
+    updateConsult: jest.fn()
   };
   const sut = new StoreWeatherUseCase(repository);
   return { sut, repository };
@@ -117,6 +118,36 @@ describe('StoreWeatherUseCase', () => {
 
     await sut.execute(params);
 
-    expect(repository.findConsultById).toBeCalledWith(params.city);
+    expect(repository.findConsultById).toBeCalledWith(params.cityId);
+  });
+  it('should call storeWeather with right params method if findConsultById method returns null', async () => {
+    const { sut, repository } = makeSut();
+
+    await sut.execute(params);
+    const rightParams = {
+      ...params,
+      lastConsult: new Date().getTime()
+    };
+
+    expect(repository.storeWeather).toBeCalledWith(rightParams);
+    expect(repository.updateConsult).not.toBeCalled();
+  });
+  it('should call updateConsult with right params method if findConsultById method returns a consult', async () => {
+    const repository = {
+      findConsultById: jest.fn(async () => await new Promise<WeatherStoreParams|null>((resolve, reject) => {
+        resolve(dataDB);
+      })),
+      storeWeather: jest.fn(),
+      updateConsult: jest.fn()
+    };
+    const sut = new StoreWeatherUseCase(repository);
+    await sut.execute(params);
+    const rightParams = {
+      ...params,
+      lastConsult: new Date().getTime()
+    };
+
+    expect(repository.updateConsult).toBeCalledWith(rightParams);
+    expect(repository.storeWeather).not.toBeCalled();
   });
 });

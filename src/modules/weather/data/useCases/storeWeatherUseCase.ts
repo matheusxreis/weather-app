@@ -11,6 +11,18 @@ export class StoreWeatherUseCase implements iStoreWeatherUseCase {
     if (!params.minTemperature) { throw new EmptyFieldError('params.minTemperature'); }
     if (!params.maxTemperature) { throw new EmptyFieldError('params.maxTemperature'); }
     if (!params.cityId) { throw new EmptyFieldError('params.cityId'); }
-    await this.repository.findConsultById(params.cityId);
+    const data = await this.repository.findConsultById(params.cityId);
+    if (data) {
+      this.repository.updateConsult({
+        ...params,
+        lastConsult: new Date().getTime(
+        )
+      });
+      return;
+    }
+    await this.repository.storeWeather({
+      ...params,
+      lastConsult: new Date().getTime()
+    });
   }
 }
