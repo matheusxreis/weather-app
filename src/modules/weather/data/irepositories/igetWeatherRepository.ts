@@ -12,6 +12,10 @@ export interface GetWeatherResponse {
     pressure: number,
     humidity: number
    },
+   weather:{
+       id:number,
+       icon:string,
+   },
    id: number,
    name: string
 }
