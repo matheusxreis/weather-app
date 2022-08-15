@@ -23,7 +23,8 @@ export class GetWeatherInfoUseCase implements iGetWeatherInfoUseCase {
       city: response.name,
       maxTemperature: temp_max.toString(),
       minTemperature: temp_min.toString(),
-      iconId: response.weather.icon
+      iconId: response.weather.icon,
+      cityId: response.weather.id.toString()
     };
   }
 }

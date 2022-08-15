@@ -60,7 +60,8 @@ describe('GetWeatherInfoUseCase', () => {
       city: fakeResponse.name,
       maxTemperature: fakeResponse.main.temp_max.toString(),
       minTemperature: fakeResponse.main.temp_min.toString(),
-      iconId: fakeResponse.weather.icon
+      iconId: fakeResponse.weather.icon,
+      cityId: fakeResponse.weather.id.toString()
     };
     const response = await sut.execute(params);
     expect(response).toEqual(rigthResponse);

@@ -73,8 +73,8 @@ describe('StoreWeatherUseCase', () => {
       minTemperature: 'string',
       maxTemperature: '',
       iconId: 'string',
-      photo: 'string'
-
+      photo: 'string',
+      cityId: 'string'
     };
 
     expect(async () => await sut.execute(wrongParams)).rejects.toThrow(new EmptyFieldError('params.maxTemperature'));
