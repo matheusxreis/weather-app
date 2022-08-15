@@ -1,22 +1,38 @@
 import { EmptyFieldError } from '../../../../../src/global/errors/emptyFieldError';
+import { WeatherStoreParams } from '../../../../../src/modules/weather/data/irepositories/iStoreWeatherRepository';
 import { StoreWeatherUseCase } from '../../../../../src/modules/weather/data/useCases/storeWeatherUseCase';
 
+const dataDB = {
+  city: 'string',
+  actualTemperature: 'string',
+  minTemperature: 'string',
+  maxTemperature: 'string',
+  photo: 'string',
+  lastConsult: new Date().getTime(),
+  cityId: 'string'
+};
+
 const makeSut = () => {
-  const sut = new StoreWeatherUseCase();
-  return { sut };
+  const repository = {
+    findConsultById: jest.fn(async () => await new Promise<WeatherStoreParams>((resolve, reject) => {
+      resolve(dataDB);
+    })),
+    storeWeather: jest.fn()
+  };
+  const sut = new StoreWeatherUseCase(repository);
+  return { sut, repository };
 };
 
 const params = {
-  cityId: 'SP121212',
-  weather: {
-    city: 'SP',
-    actualTemperature: 'string',
-    minTemperature: 'string',
-    maxTemperature: 'string',
-    iconId: 'string',
-    photo: 'string'
 
-  }
+  city: 'SP',
+  actualTemperature: 'string',
+  minTemperature: 'string',
+  maxTemperature: 'string',
+  iconId: 'string',
+  photo: 'string',
+  cityId: 'string'
+
 };
 describe('StoreWeatherUseCase', () => {
   it('should throws EmptyFieldError if params.city is empty', async () => {
@@ -28,7 +44,8 @@ describe('StoreWeatherUseCase', () => {
       minTemperature: 'string',
       maxTemperature: 'string',
       iconId: 'string',
-      photo: 'string'
+      photo: 'string',
+      cityId: 'string'
 
     };
 
@@ -43,7 +60,8 @@ describe('StoreWeatherUseCase', () => {
       minTemperature: 'string',
       maxTemperature: 'string',
       iconId: 'string',
-      photo: 'string'
+      photo: 'string',
+      cityId: 'string'
 
     };
 
@@ -58,8 +76,8 @@ describe('StoreWeatherUseCase', () => {
       minTemperature: '',
       maxTemperature: 'string',
       iconId: 'string',
-      photo: 'string'
-
+      photo: 'string',
+      cityId: 'string'
     };
 
     expect(async () => await sut.execute(wrongParams)).rejects.toThrow(new EmptyFieldError('params.minTemperature'));
@@ -78,5 +96,12 @@ describe('StoreWeatherUseCase', () => {
     };
 
     expect(async () => await sut.execute(wrongParams)).rejects.toThrow(new EmptyFieldError('params.maxTemperature'));
+  });
+  it('should findConsultById method receive right city id', async () => {
+    const { sut, repository } = makeSut();
+
+    await sut.execute(params);
+
+    expect(repository.findConsultById).toBeCalledWith(params.city);
   });
 });

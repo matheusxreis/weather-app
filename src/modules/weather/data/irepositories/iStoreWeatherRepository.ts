@@ -6,7 +6,7 @@ minTemperature: string,
 maxTemperature: string,
 photo?:string,
 lastConsult:number,
-id: string
+cityId: string
 }
 export interface iStoreWeatherRepository {
     storeWeather(params: WeatherStoreParams):Promise<void>,

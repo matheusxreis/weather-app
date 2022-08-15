@@ -12,6 +12,5 @@ export class StoreWeatherUseCase implements iStoreWeatherUseCase {
     if (!params.maxTemperature) { throw new EmptyFieldError('params.maxTemperature'); }
 
     await this.repository.findConsultById(params.cityId);
-    throw new Error('Method not implemented.');
   }
 }
