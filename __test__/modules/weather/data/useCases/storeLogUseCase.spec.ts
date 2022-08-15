@@ -76,4 +76,10 @@ describe('StoreLogUseCase', () => {
 
     expect(repository.storeLog).toBeCalledWith(rightParams);
   });
+  it('should throws if repository throws', async () => {
+    const repository = { storeLog: () => { throw new Error(); } };
+    const sut = new StoreLogUseCase(repository);
+
+    expect(async () => await sut.execute(params)).rejects.toThrow();
+  });
 });
