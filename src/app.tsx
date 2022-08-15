@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './styles/theme';
-import { GlobalStyle } from './styles/global';
+import { theme } from './global/styles/theme';
+import { GlobalStyle } from './global/styles/global';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from './store/index';
+import { persistor, store } from './global/store/index';
 
 export default function App () {
   const [counter, setCounter] = useState<number>(0);
