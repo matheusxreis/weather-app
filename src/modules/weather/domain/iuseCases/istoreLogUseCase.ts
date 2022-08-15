@@ -1,12 +1,7 @@
 import { Weather } from '../entities/weather';
 
-type StoreWeatherParams = {
-    city:string,
-    weather:Weather
-}
-
 type StoreLogsParams = {
-    consult: StoreWeatherParams,
+    consult: Weather,
     consultedAt: number
 }
 
