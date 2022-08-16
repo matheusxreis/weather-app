@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
 
 import { EmptyFieldError } from '../../../../global/errors/emptyFieldError';
-import { Weather } from '../../domain/entities/weather';
 import { iGetWeatherInfoUseCase } from '../../domain/iuseCases/igetWeatherInfoUseCase';
 import { iGetWeatherRepository } from '../irepositories/igetWeatherRepository';
 class GetWeatherInfoUseCase implements iGetWeatherInfoUseCase {
   constructor (private repository: iGetWeatherRepository) {}
-  async execute (params: { latitute: string; longitude: string; }): Promise<Weather> {
+  async execute (params: { latitute: string; longitude: string; }) {
     if (!params.latitute) { throw new EmptyFieldError('latitude'); }
     if (!params.longitude) { throw new EmptyFieldError('longitude'); }
 
@@ -17,13 +16,14 @@ class GetWeatherInfoUseCase implements iGetWeatherInfoUseCase {
       temp_max,
       temp_min
     } = response.main;
+    console.log(response, 'usecASE');
     return {
-      actualTemperature: temp.toString(),
+      actualTemperature: String(temp),
       city: response.name,
-      maxTemperature: temp_max.toString(),
-      minTemperature: temp_min.toString(),
+      maxTemperature: String(temp_max),
+      minTemperature: String(temp_min),
       iconId: response.weather.icon,
-      cityId: response.weather.id.toString()
+      cityId: String(response.weather.id)
     };
   }
 }

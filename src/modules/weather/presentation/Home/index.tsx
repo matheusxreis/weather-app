@@ -12,18 +12,17 @@ name:string,
 lat:string,
 lon:string
 }
+const cities: CityType[] = [
+  { name: 'São Paulo', lon: '-49.0', lat: '-22.0' },
+  { name: 'Nova York', lon: '-74.005966', lat: '40.714272' },
+  { name: 'Tokyo', lon: '139.691711', lat: '35.689499' },
+  { name: 'Paris', lon: '2.3486', lat: '48.853401' },
+  { name: 'Amsterdam', lon: '4.88969', lat: '52.374031' }
+
+];
 export function Home () {
   const [weather, setWeather] = useState<Weather>({} as Weather);
-  const [actualCity, setActualCity] = useState<CityType>({ name: 'São Paulo', lon: '1122', lat: '11212' });
-
-  const cities: CityType[] = [
-    { name: 'São Paulo', lon: '1122', lat: '11212' },
-    { name: 'Nova York', lon: '1122', lat: '11212' },
-    { name: 'Tokyo', lon: '1122', lat: '11212' },
-    { name: 'Londres', lon: '1122', lat: '11212' },
-    { name: 'Amsterdam', lon: '1122', lat: '11212' }
-
-  ];
+  const [actualCity, setActualCity] = useState<CityType>(cities[0]);
 
   const getWeather = () => {
     const r = new AxiosRepository();
@@ -31,22 +30,28 @@ export function Home () {
     return getWeatherUseCase;
   };
 
-  async function getWeatherInfo () {
+  async function getWeatherInfo (lat:string, lon:string) {
     try {
-      await getWeather().execute({ latitute: '12', longitude: '122' });
-    } catch {}
+      const response = await getWeather().execute({ latitute: lat, longitude: lon }).then(x => x);
+      setWeather(response);
+    } catch (err) {
+      console.log('err', err);
+    }
   }
 
-  function changeCityWeather (city:CityType) {
+  async function changeCityWeather (city:CityType) {
+    console.log(city);
     setActualCity(city);
+    await getWeatherInfo(city.lat, city.lon);
   }
   function isCitySelected (city: CityType) {
     return city.name === actualCity.name;
   }
 
   useEffect(() => {
-    getWeatherInfo();
+    getWeatherInfo(actualCity.lat, actualCity.lon);
   }, []);
+  useEffect(() => { console.log(weather); }, [weather]);
 
   return (
         <Component.Container>
@@ -74,11 +79,11 @@ export function Home () {
 
             </Component.SelectWeatherButtonContainer>
             <WeatherView
-            actualTemperature='25'
-            city='São Paulo'
+            actualTemperature={weather?.actualTemperature}
+            city={weather?.city}
             image=''
-            maxTemperature='29'
-            minTemparature='19'
+            maxTemperature={weather?.maxTemperature}
+            minTemparature={weather?.minTemperature}
         />
             </Component.Card>
 

@@ -48,11 +48,11 @@ cursor: pointer;
 
 export const Header = styled.div`
     //background: ${({ theme }) => theme.colors.backgroundSecondary};
-    background-image:url('https://centralca.cdn-anvilcms.net/media/images/2019/01/02/images/Rainy_Weather_pix.max-1200x675.jpg');
+    background-image:url('https://wallpaperaccess.com/full/2860353.jpg');
     width:100%;
     flex-direction:column;
     padding: 0px 0px;
-   
+
 `;
 export const TitleContainer = styled.div`
      margin:0 auto;

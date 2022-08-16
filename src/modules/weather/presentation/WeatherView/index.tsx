@@ -30,9 +30,22 @@ export function WeatherView ({
         <Component.Container>
             <Component.DataWeatherContainer>
             <Component.TimeNowIn>Tempo agora em: {city}. </Component.TimeNowIn>
-            <Component.Pharagraph><ActualIcon size={24}/>  Temperatura atual: {actualTemperature} °C.</Component.Pharagraph>
-            <Component.Pharagraph><MaxIcon size={24} />  Temperatura mínima: {minTemparature} °C. </Component.Pharagraph>
-            <Component.Pharagraph><MinIcon size={24}/>  Temperatura máxima: {maxTemperature} °C. </Component.Pharagraph>
+             <Component.PharagraphContainer>
+             <ActualIcon size={24}/>
+            <Component.Pharagraph>
+                 Temperatura atual: {actualTemperature} °C.
+            </Component.Pharagraph>
+             </Component.PharagraphContainer>
+             <Component.PharagraphContainer>
+             <MaxIcon size={24} />
+             <Component.Pharagraph>
+                 Temperatura mínima: {minTemparature} °C.
+                  </Component.Pharagraph>
+             </Component.PharagraphContainer>
+             <Component.PharagraphContainer>
+             <MinIcon size={24}/>
+            <Component.Pharagraph> Temperatura máxima: {maxTemperature} °C. </Component.Pharagraph>
+             </Component.PharagraphContainer>
             <Component.TemperatureLabel isSun={isSun()}>
                     <Component.Pharagraph> {getTextLabel()} </Component.Pharagraph>
             </Component.TemperatureLabel>

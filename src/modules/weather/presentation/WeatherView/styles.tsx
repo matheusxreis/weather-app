@@ -9,35 +9,39 @@ export const Container = styled.div`
     filter: brightness(0.95);
     border-radius:7px;
     padding:14px 54px;
-    height:200px;
+    min-height:200px;
     display:flex;
     align-items:center;
-    justify-content: space-between;
-    
+    justify-content:space-around;
+
 `;
 
 export const TimeNowIn = styled.h2`
-    
-font-size:26px;
+
+font-size:24px;
 font-family: ${({ theme }) => theme.fonts.normal};
 color: ${({ theme }) => theme.colors.textSecondary};
 
 `;
 
+export const PharagraphContainer = styled.div`
+display:flex;
+align-items:center;
+`;
 export const Pharagraph = styled.p`
-    
 font-size:20px;
 display:flex;
 text-align:center;
 font-family: ${({ theme }) => theme.fonts.normal};
 color: ${({ theme }) => theme.colors.textSecondary};
-margin: 5px 0px;
+margin: 6px 0px;
+
 
 `;
 
 export const DataWeatherContainer = styled.div``;
 export const Image = styled.img`
-    
+
     width:200px;
     height:200px;
     border-radius:200px;
