@@ -2,10 +2,21 @@ import { iStoreLogRepository } from '../data/irepositories/istoreLogRepository';
 import { iStoreWeatherRepository, WeatherStoreParams } from '../data/irepositories/iStoreWeatherRepository';
 import { db } from './helpers/firebaseConfig';
 import { doc, collection, addDoc, where, query, getDocs, updateDoc } from 'firebase/firestore';
+import { store } from '../../../global/store';
 
 export class FirebaseRepository implements iStoreLogRepository, iStoreWeatherRepository {
-  storeLog (params: WeatherStoreParams): Promise<void> {
-    throw new Error('Method not implemented.');
+  async storeLog (params: WeatherStoreParams): Promise<void> {
+    const data = {
+      actualTemperature: params.actualTemperature,
+      minTemperature: params.minTemperature,
+      maxTemperature: params.maxTemperature,
+      city: params.city,
+      cityId: params.cityId,
+      photo: params.photo ? params.photo : null,
+      lastConsult: params.lastConsult
+    };
+    const col = collection(db, 'log');
+    await addDoc(col, data);
   }
 
   async storeWeather (params: WeatherStoreParams): Promise<void> {

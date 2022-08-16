@@ -8,6 +8,7 @@ import { BsCloudSunFill as WeatherIcon } from 'react-icons/bs';
 import { useTheme } from 'styled-components';
 import { FirebaseRepository } from '../../infra/firebaseRepository';
 import { StoreWeatherUseCase } from '../../data/useCases/storeWeatherUseCase';
+import { StoreLogUseCase } from '../../data/useCases/storeLogUseCase';
 
 type CityType = {
 name:string,
@@ -33,6 +34,12 @@ const saveWeather = () => {
   const storeWeatherUseCase = new StoreWeatherUseCase(r);
   return storeWeatherUseCase;
 };
+
+const saveLogs = () => {
+  const r = new FirebaseRepository();
+  const storeLogsUseCase = new StoreLogUseCase(r);
+  return storeLogsUseCase;
+};
 export function Home () {
   const [weather, setWeather] = useState<Weather>({} as Weather);
   const [actualCity, setActualCity] = useState<CityType>(cities[0]);
@@ -42,6 +49,7 @@ export function Home () {
       const response = await getWeather().execute({ latitute: lat, longitude: lon }).then(x => x);
       setWeather(response);
       await saveWeather().execute(response);
+      await saveLogs().execute(response);
     } catch (err) {
       console.log('err', err);
     }
