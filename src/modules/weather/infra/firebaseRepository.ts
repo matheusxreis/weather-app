@@ -1,7 +1,7 @@
 import { iStoreLogRepository } from '../data/irepositories/istoreLogRepository';
 import { iStoreWeatherRepository, WeatherStoreParams } from '../data/irepositories/iStoreWeatherRepository';
 import { db } from './helpers/firebaseConfig';
-import { doc, collection, addDoc, getDoc, where, query, getDocs } from 'firebase/firestore';
+import { doc, collection, addDoc, where, query, getDocs, updateDoc } from 'firebase/firestore';
 
 export class FirebaseRepository implements iStoreLogRepository, iStoreWeatherRepository {
   storeLog (params: WeatherStoreParams): Promise<void> {
@@ -26,15 +26,34 @@ export class FirebaseRepository implements iStoreLogRepository, iStoreWeatherRep
     const q = query(collection(db, 'consult'), where('cityId', '==', cityId));
     const querySnapshot = await getDocs(q);
     let city;
+
     querySnapshot.forEach((doc) => {
       console.log(doc.data(), 'data');
       city = doc.data();
     });
-    console.log('item', city);
     return city as unknown as WeatherStoreParams;
   }
 
   async updateConsult (params: WeatherStoreParams): Promise<void> {
-    // throw new Error('Method not implemented.');
+    const q = query(collection(db, 'consult'), where('cityId', '==', params.cityId));
+    const querySnapshot = await getDocs(q);
+    let id = '';
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data(), 'data');
+      id = doc.id;
+    });
+
+    const docRef = doc(db, 'consult', id);
+
+    const data = {
+      actualTemperature: params.actualTemperature,
+      minTemperature: params.minTemperature,
+      maxTemperature: params.maxTemperature,
+      city: params.city,
+      cityId: params.cityId,
+      photo: params.photo ? params.photo : null,
+      lastConsult: params.lastConsult
+    };
+    await updateDoc(docRef, data);
   }
 }
