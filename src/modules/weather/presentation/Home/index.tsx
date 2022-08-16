@@ -6,6 +6,8 @@ import { WeatherView } from '../WeatherView';
 import * as Component from './styles';
 import { BsCloudSunFill as WeatherIcon } from 'react-icons/bs';
 import { useTheme } from 'styled-components';
+import { FirebaseRepository } from '../../infra/firebaseRepository';
+import { StoreWeatherUseCase } from '../../data/useCases/storeWeatherUseCase';
 
 type CityType = {
 name:string,
@@ -20,15 +22,20 @@ const cities: CityType[] = [
   { name: 'Amsterdam', lon: '4.88969', lat: '52.374031' }
 
 ];
+const getWeather = () => {
+  const r = new AxiosRepository();
+  const getWeatherUseCase = new GetWeatherInfoUseCase(r);
+  return getWeatherUseCase;
+};
+
+const saveWeather = () => {
+  const r = new FirebaseRepository();
+  const storeWeatherUseCase = new StoreWeatherUseCase(r);
+  return storeWeatherUseCase;
+};
 export function Home () {
   const [weather, setWeather] = useState<Weather>({} as Weather);
   const [actualCity, setActualCity] = useState<CityType>(cities[0]);
-
-  const getWeather = () => {
-    const r = new AxiosRepository();
-    const getWeatherUseCase = new GetWeatherInfoUseCase(r);
-    return getWeatherUseCase;
-  };
 
   async function getWeatherInfo (lat:string, lon:string) {
     try {
@@ -43,6 +50,7 @@ export function Home () {
     console.log(city);
     setActualCity(city);
     await getWeatherInfo(city.lat, city.lon);
+    await saveWeather().execute(weather);
   }
   function isCitySelected (city: CityType) {
     return city.name === actualCity.name;
