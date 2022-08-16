@@ -4,7 +4,6 @@ import { Weather } from '../../domain/entities/weather';
 import { AxiosRepository } from '../../infra/axiosRepository';
 import { WeatherView } from '../WeatherView';
 import * as Component from './styles';
-import { BsCloudSunFill as WeatherIcon } from 'react-icons/bs';
 import { useTheme } from 'styled-components';
 import { FirebaseRepository } from '../../infra/firebaseRepository';
 import { StoreWeatherUseCase } from '../../data/useCases/storeWeatherUseCase';
@@ -85,9 +84,7 @@ export function Home () {
             </Component.SelectWeatherButton>
 
             ))}
-             <WeatherIcon
-                size={30}
-                color={useTheme().colors.textSecondary} />
+
 
             </Component.SelectWeatherButtonContainer>
             <WeatherView

@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     //background: ${({ theme }) => theme.colors.backgroundSecondary};
-    background-image:url('https://wallpaperaccess.com/full/2860353.jpg');
+  //  background-image:url('https://wallpaperaccess.com/full/2860353.jpg');
+  background: #212930;
     width:100%;
     flex-direction:column;
     padding: 0px 0px;
@@ -19,7 +20,7 @@ export const Title = styled.h1`
 
 export const SubTitle = styled.h1`
 font-family: ${({ theme }) => theme.fonts.normal};
-    font-size: 26px;
+    font-size: 23px;
     color: ${({ theme }) => theme.colors.textPrimary};
     font-weight: 200;`;
 
