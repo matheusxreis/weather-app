@@ -1,10 +1,13 @@
 import styled from 'styled-components';
+import { theme } from '../../../../global/styles/theme';
 
 type ButtonProps = {
     isSelected:boolean;
 }
 
-export const Container = styled.div``;
+export const Container = styled.div`
+background: ${({ theme }) => theme.colors.backgroundSecondary};
+`;
 
 export const Title = styled.h1`
     font-family: ${({ theme }) => theme.fonts.title};
@@ -22,7 +25,7 @@ font-family: ${({ theme }) => theme.fonts.normal};
 `;
 export const SelectWeatherButton = styled.button<ButtonProps>`
 
-background: ${({ isSelected }) => isSelected ? '#fafafa' : 'transparent'};;
+background: ${({ isSelected, theme }) => isSelected ? theme.colors.backgroundSecondary : 'transparent'};;
 color: ${({ theme, isSelected }) => theme.colors.textSecondary};
 filter:${({ isSelected }) => isSelected ? 'brightness(0.95)' : 'brightness(1)'};
 font-size: 22px;
@@ -31,7 +34,6 @@ width: 150px;
 height: 40px;
 border: 0px;
 border-radius:2px;
-margin-top:10px;
 font-family: ${({ theme }) => theme.fonts.normal};
 font-size:16px;
 
@@ -40,29 +42,13 @@ transition: 0.5s;
 cursor: pointer;
 &:hover {
     filter: brightness(0.95);
-    background: #fafafa;
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
+
 }
 
 
 `;
 
-export const Header = styled.div`
-    //background: ${({ theme }) => theme.colors.backgroundSecondary};
-    background-image:url('https://wallpaperaccess.com/full/2860353.jpg');
-    width:100%;
-    flex-direction:column;
-    padding: 0px 0px;
-
-`;
-export const TitleContainer = styled.div`
-     margin:0 auto;
-     display: flex;
-     flex-direction:column;
-     align-items:center;
-     backdrop-filter: blur(60px);
-     padding:30px;
-     border-radius:7px;
-`;
 export const SelectWeatherButtonContainer = styled.div`
     display:flex;
     align-items:center;
@@ -78,8 +64,10 @@ export const Card = styled.div`
     width:1000px;
     margin: 0 auto;
     max-width:100%;
-    background: ${({ theme }) => theme.colors.backgroundPrimary};
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
     border-radius:2px;
+    filter: brightness(0.95);
+    margin-top:10px;
 
 
 `;

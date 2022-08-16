@@ -4,8 +4,8 @@ export const theme = {
     secondary: '#CC4743',
     textPrimary: '#fff',
     backgroundPrimary: '#fff',
-    backgroundSecondary: '#0E0F0F',
-    textSecondary: '#0E0F0F'
+    backgroundSecondary: '#F0F0F0',
+    textSecondary: '#383838'
   },
   fonts: {
     title: '"Great Vibes", cursive;',
