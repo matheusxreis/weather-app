@@ -1,27 +1,19 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Weather } from '../../domain/entities/weather';
+import React from 'react';
 import * as Component from './styles';
+import { useRanking } from './useRanking';
 
 export function Ranking () {
-  const w:Weather[] = useSelector((x:any) => x.weather);
-
-  function OrderState () {
-    return w?.sort((a, b) => Number(a.maxTemperature) - Number(b.maxTemperature));
-  }
-
-  useEffect(() => console.log('weather', OrderState()), [w]);
-
+  const { orderState, w } = useRanking();
   return (
         <Component.Container>
             <Component.FlexContainer>
             <Component.Card>
             <Component.Title>O lugar mais frio: </Component.Title>
-                <Component.Text> {OrderState()[0]?.city} com {OrderState()[0]?.minTemperature} graus celsius! </Component.Text>
+                <Component.Text> {orderState()[0]?.city} com {orderState()[0]?.minTemperature} graus celsius! </Component.Text>
             </Component.Card>
             <Component.Card>
             <Component.Title>O lugar mais quente: </Component.Title>
-            <Component.Text> {OrderState()[w.length - 1]?.city} com {OrderState()[w.length - 1]?.maxTemperature} graus celsius!  </Component.Text>
+            <Component.Text> {orderState()[w.length - 1]?.city} com {orderState()[w.length - 1]?.maxTemperature} graus celsius!  </Component.Text>
 
             </Component.Card>
             </Component.FlexContainer>
