@@ -4,8 +4,7 @@ import { EmptyFieldError } from '../../../../global/errors/emptyFieldError';
 import { Weather } from '../../domain/entities/weather';
 import { iGetWeatherInfoUseCase } from '../../domain/iuseCases/igetWeatherInfoUseCase';
 import { iGetWeatherRepository } from '../irepositories/igetWeatherRepository';
-
-export class GetWeatherInfoUseCase implements iGetWeatherInfoUseCase {
+class GetWeatherInfoUseCase implements iGetWeatherInfoUseCase {
   constructor (private repository: iGetWeatherRepository) {}
   async execute (params: { latitute: string; longitude: string; }): Promise<Weather> {
     if (!params.latitute) { throw new EmptyFieldError('latitude'); }
@@ -28,3 +27,5 @@ export class GetWeatherInfoUseCase implements iGetWeatherInfoUseCase {
     };
   }
 }
+
+export { GetWeatherInfoUseCase };
