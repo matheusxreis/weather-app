@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from '../../../../global/styles/theme';
 
 type ButtonProps = {
     isSelected:boolean;

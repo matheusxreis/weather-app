@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Component from './styles';
-import { BsFillSunriseFill as MaxIcon, BsFillSunsetFill as MinIcon, BsSunFill, BsThermometerSun as ActualIcon } from 'react-icons/bs';
-import { useTheme } from 'styled-components';
+import { BsFillSunriseFill as MaxIcon, BsFillSunsetFill as MinIcon, BsThermometerSun as ActualIcon } from 'react-icons/bs';
 
 type WeatherViewProps = {
     actualTemperature: string,

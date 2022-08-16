@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './global/styles/theme';
 import { GlobalStyle } from './global/styles/global';
@@ -9,11 +9,6 @@ import { MyRoutes } from './global/routes';
 import { Header } from './modules/weather/presentation/Header';
 
 export default function App () {
-  const [counter, setCounter] = useState<number>(0);
-
-  function incrementCounter () { setCounter(counter + 1); }
-  function decrementCounter () { setCounter(counter - 1); }
-
   return (
     <ReduxProvider store={store}>
     <PersistGate loading={null} persistor={persistor}>
