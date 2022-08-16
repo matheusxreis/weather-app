@@ -2,7 +2,6 @@ import { iStoreLogRepository } from '../data/irepositories/istoreLogRepository';
 import { iStoreWeatherRepository, WeatherStoreParams } from '../data/irepositories/iStoreWeatherRepository';
 import { db } from './helpers/firebaseConfig';
 import { doc, collection, addDoc, where, query, getDocs, updateDoc } from 'firebase/firestore';
-import { store } from '../../../global/store';
 
 export class FirebaseRepository implements iStoreLogRepository, iStoreWeatherRepository {
   async storeLog (params: WeatherStoreParams): Promise<void> {

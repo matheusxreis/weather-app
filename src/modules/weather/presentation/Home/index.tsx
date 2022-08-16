@@ -40,6 +40,7 @@ const saveLogs = () => {
   const storeLogsUseCase = new StoreLogUseCase(r);
   return storeLogsUseCase;
 };
+
 export function Home () {
   const [weather, setWeather] = useState<Weather>({} as Weather);
   const [actualCity, setActualCity] = useState<CityType>(cities[0]);
@@ -105,4 +106,4 @@ export function Home () {
 
         </Component.Container>
   );
-}
+};
