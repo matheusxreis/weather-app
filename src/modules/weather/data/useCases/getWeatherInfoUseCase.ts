@@ -16,13 +16,14 @@ class GetWeatherInfoUseCase implements iGetWeatherInfoUseCase {
       temp_max,
       temp_min
     } = response.main;
+
     return {
       actualTemperature: String(temp),
       city: response.name,
       maxTemperature: String(temp_max),
       minTemperature: String(temp_min),
       iconId: response.weather[0].icon,
-      cityId: String(response.weather[0].id)
+      cityId: String(response.id)
     };
   }
 }
