@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Component from './styles';
-import { BsFillSunriseFill as MaxIcon, BsFillSunsetFill as MinIcon, BsThermometerSun as ActualIcon } from 'react-icons/bs';
+import { BsFillSunriseFill as MaxIcon, BsFillSunsetFill as MinIcon, BsSunFill, BsThermometerSun as ActualIcon } from 'react-icons/bs';
+import { useTheme } from 'styled-components';
 
 type WeatherViewProps = {
     actualTemperature: string,
@@ -50,8 +51,6 @@ export function WeatherView ({
                     <Component.Pharagraph> {getTextLabel()} </Component.Pharagraph>
             </Component.TemperatureLabel>
             </Component.DataWeatherContainer>
-
-            <Component.Image src={'https://georgiatoday.ge/wp-content/uploads/2021/07/rain-umbrella-vancouver-weather.jpg'} />
 
         </Component.Container>
   );
