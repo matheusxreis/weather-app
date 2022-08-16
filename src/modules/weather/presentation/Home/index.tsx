@@ -41,6 +41,7 @@ export function Home () {
     try {
       const response = await getWeather().execute({ latitute: lat, longitude: lon }).then(x => x);
       setWeather(response);
+      await saveWeather().execute(response);
     } catch (err) {
       console.log('err', err);
     }
@@ -50,7 +51,6 @@ export function Home () {
     console.log(city);
     setActualCity(city);
     await getWeatherInfo(city.lat, city.lon);
-    await saveWeather().execute(weather);
   }
   function isCitySelected (city: CityType) {
     return city.name === actualCity.name;

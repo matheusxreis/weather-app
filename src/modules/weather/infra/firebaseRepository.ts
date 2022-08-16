@@ -1,7 +1,7 @@
 import { iStoreLogRepository } from '../data/irepositories/istoreLogRepository';
 import { iStoreWeatherRepository, WeatherStoreParams } from '../data/irepositories/iStoreWeatherRepository';
 import { db } from './helpers/firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, collection, addDoc, getDoc, where, query, getDocs } from 'firebase/firestore';
 
 export class FirebaseRepository implements iStoreLogRepository, iStoreWeatherRepository {
   storeLog (params: WeatherStoreParams): Promise<void> {
@@ -23,10 +23,18 @@ export class FirebaseRepository implements iStoreLogRepository, iStoreWeatherRep
   }
 
   async findConsultById (cityId: string): Promise<WeatherStoreParams | null> {
-    return null;
+    const q = query(collection(db, 'consult'), where('cityId', '==', cityId));
+    const querySnapshot = await getDocs(q);
+    let city;
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data(), 'data');
+      city = doc.data();
+    });
+    console.log('item', city);
+    return city as unknown as WeatherStoreParams;
   }
 
-  updateConsult (params: WeatherStoreParams): Promise<void> {
-    throw new Error('Method not implemented.');
+  async updateConsult (params: WeatherStoreParams): Promise<void> {
+    // throw new Error('Method not implemented.');
   }
 }
