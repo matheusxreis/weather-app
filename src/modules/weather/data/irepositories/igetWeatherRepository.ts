@@ -15,7 +15,7 @@ export interface GetWeatherResponse {
    weather:{
        id:number,
        icon:string,
-   },
+   }[],
    id: number,
    name: string
 }
