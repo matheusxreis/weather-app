@@ -13,10 +13,10 @@ const fakeResponse = {
     pressure: 1023,
     humidity: 100
   },
-  weather: {
+  weather: [{
     id: 12978292,
     icon: '18871'
-  },
+  }],
   id: 182729202,
   name: 'anyCity'
 
@@ -60,8 +60,8 @@ describe('GetWeatherInfoUseCase', () => {
       city: fakeResponse.name,
       maxTemperature: fakeResponse.main.temp_max.toString(),
       minTemperature: fakeResponse.main.temp_min.toString(),
-      iconId: fakeResponse.weather.icon,
-      cityId: fakeResponse.weather.id.toString()
+      iconId: fakeResponse.weather[0].icon,
+      cityId: fakeResponse.id.toString()
     };
     const response = await sut.execute(params);
     expect(response).toEqual(rigthResponse);
