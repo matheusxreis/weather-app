@@ -15,3 +15,11 @@ export function updateMinWeather (weather: Weather) {
     payload: { weather }
   };
 }
+
+export function updateWeather (weather: Weather) {
+  console.log('wawa');
+  return {
+    type: weatherTypes.updteWeatherList,
+    payload: { weather }
+  };
+}
