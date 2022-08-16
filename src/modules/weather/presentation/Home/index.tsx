@@ -4,10 +4,11 @@ import { Weather } from '../../domain/entities/weather';
 import { AxiosRepository } from '../../infra/axiosRepository';
 import { WeatherView } from '../WeatherView';
 import * as Component from './styles';
-import { useTheme } from 'styled-components';
 import { FirebaseRepository } from '../../infra/firebaseRepository';
 import { StoreWeatherUseCase } from '../../data/useCases/storeWeatherUseCase';
 import { StoreLogUseCase } from '../../data/useCases/storeLogUseCase';
+import { useDispatch } from 'react-redux';
+import { updateWeather } from '../../../../global/store/weather/actions';
 
 type CityType = {
 name:string,
@@ -43,11 +44,16 @@ const saveLogs = () => {
 export function Home () {
   const [weather, setWeather] = useState<Weather>({} as Weather);
   const [actualCity, setActualCity] = useState<CityType>(cities[0]);
+  const dispatch = useDispatch();
 
   async function getWeatherInfo (lat:string, lon:string) {
     try {
+      console.log('ooooi222');
+
       const response = await getWeather().execute({ latitute: lat, longitude: lon }).then(x => x);
       setWeather(response);
+      dispatch(updateWeather(response));
+      // dispatch(updateMinWeather(response));
       await saveWeather().execute(response);
       await saveLogs().execute(response);
     } catch (err) {
@@ -56,7 +62,7 @@ export function Home () {
   }
 
   async function changeCityWeather (city:CityType) {
-    console.log(city);
+    console.log('ooooi');
     setActualCity(city);
     await getWeatherInfo(city.lat, city.lon);
   }
@@ -84,7 +90,6 @@ export function Home () {
             </Component.SelectWeatherButton>
 
             ))}
-
 
             </Component.SelectWeatherButtonContainer>
             <WeatherView
