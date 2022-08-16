@@ -6,7 +6,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './global/store/index';
 import { MyRoutes } from './global/routes';
-import { Header } from './modules/weather/presentation/Header';
+import { Header } from './global/components/Header';
 
 export default function App () {
   return (
