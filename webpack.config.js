@@ -10,14 +10,17 @@ module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
   devServer: {
     static: path.resolve(__dirname, 'public'),
-    hot: true
+    hot: true,
+    historyApiFallback: true
+
   },
   plugins: [
     isDev && new ReactRefreshWebpackPlugin(),
