@@ -19,6 +19,9 @@ const params = {
 
 };
 
+const fakeDoc = {
+  data: () => 'fakeWeatherStoreParams'
+};
 jest.mock('firebase/firestore', () => {
   return {
     addDoc: jest.fn(),
@@ -26,7 +29,7 @@ jest.mock('firebase/firestore', () => {
     getFirestore: jest.fn().mockImplementation(() => 'fakeDB'),
     query: jest.fn().mockImplementation(() => 'fakeQuery'),
     where: jest.fn().mockImplementation(() => 'fakeWhere'),
-    getDocs: jest.fn().mockImplementation(() => ({ forEach: jest.fn() }))
+    getDocs: jest.fn().mockImplementation(() => ([fakeDoc, fakeDoc]))
   };
 });
 
@@ -208,5 +211,33 @@ describe('FirebaseRepository', () => {
     await sut.storeWeather(params);
 
     expect(firestore.addDoc).toBeCalledWith('fakeCollection', params);
+  });
+  it('should throws a EmptyFiledError if cityId is empty in findConsultById method', async () => {
+    const { sut } = makeSut();
+
+    expect(async () => await sut.findConsultById(''))
+      .rejects
+      .toThrow(new EmptyFieldError('cityId'));
+  });
+  it('should query method be receive correct params in findConsultById method', async () => {
+    const { sut } = makeSut();
+
+    await sut.findConsultById('cityId');
+
+    expect(firestore.query).toBeCalledWith('fakeCollection', 'fakeWhere');
+  });
+  it('should getDocs method be receive correct params in findConsultById method', async () => {
+    const { sut } = makeSut();
+
+    await sut.findConsultById('cityId');
+
+    expect(firestore.getDocs).toBeCalledWith('fakeQuery');
+  });
+  it('should getDocs method be receive correct params in findConsultById method', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.findConsultById('cityId');
+
+    expect(result).toBe('fakeWeatherStoreParams');
   });
 });
