@@ -6,8 +6,6 @@ COPY package.json .
 
 RUN npm install
 
-RUN npx husky install
-
 COPY . .
 
 CMD ["npm", "run", "dev"]
