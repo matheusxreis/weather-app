@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Card = styled.div`
-background: ${({ theme }) => theme.colors.backgroundPrimary};
+backdrop-filter: blur(300px);
 width:350px;
 max-width:100%;
 border-radius:4px;

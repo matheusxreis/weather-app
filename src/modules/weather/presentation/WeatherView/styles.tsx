@@ -11,9 +11,14 @@ export const Container = styled.div`
     border-radius:7px;
     padding:14px 54px;
     min-height:200px;
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
+    display:grid;
+    grid: "item1 item2";
+    align-items:start;
+    justify-items:center;
+
+    @media(max-width:700px){
+        grid: "item1" "item2";
+    }
 
 `;
 
@@ -22,8 +27,10 @@ export const TimeNowIn = styled.p`
 font-size:30px;
 font-family: ${({ theme }) => theme.fonts.normal};
 color: ${({ theme }) => theme.colors.textSecondary};
-span {
-}
+@media(max-width:700px){
+    font-size:25px;
+
+    }
 `;
 
 export const PharagraphContainer = styled.div`
@@ -54,9 +61,10 @@ font-weight:400;
 
 
 `;
-export const DataWeatherContainer = styled.div``;
+export const DataWeatherContainer = styled.div`
+grid-area: "item1"`;
 export const Image = styled.img`
-
+    grid-area:"item 2";
     width:200px;
     height:200px;
 `;

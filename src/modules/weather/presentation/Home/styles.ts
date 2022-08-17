@@ -67,7 +67,7 @@ export const Card = styled.div`
     width:1000px;
     margin: 0 auto;
     max-width:100%;
-    backdrop-filter: blur(90px);
+    backdrop-filter: blur(300px);
     //background: ${({ theme }) => theme.colors.backgroundSecondary};
     border-radius:5px;
     filter: brightness(0.95);
