@@ -5,7 +5,6 @@ const initialState = [] as any;
 export function weatherReducer (state = initialState, action: AnyAction) {
   switch (action.type) {
     case weatherTypes.updteWeatherList:
-      console.log('cheguei no reducer', action);
       // eslint-disable-next-line no-case-declarations
       const { weather } = action.payload;
       // eslint-disable-next-line no-case-declarations
