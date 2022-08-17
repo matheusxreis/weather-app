@@ -23,7 +23,10 @@ jest.mock('firebase/firestore', () => {
   return {
     addDoc: jest.fn(),
     collection: jest.fn().mockImplementation(() => 'fakeCollection'),
-    getFirestore: jest.fn().mockImplementation(() => 'fakeDB')
+    getFirestore: jest.fn().mockImplementation(() => 'fakeDB'),
+    query: jest.fn().mockImplementation(() => 'fakeQuery'),
+    where: jest.fn().mockImplementation(() => 'fakeWhere'),
+    getDocs: jest.fn().mockImplementation(() => ({ forEach: jest.fn() }))
   };
 });
 
@@ -114,6 +117,95 @@ describe('FirebaseRepository', () => {
     const { sut } = makeSut();
 
     await sut.storeLog(params);
+
+    expect(firestore.addDoc).toBeCalledWith('fakeCollection', params);
+  });
+  it('should throws a EmptyFieldError if params.city is empty in storeWeather method', async () => {
+    const wrongParams = {
+      city: '',
+      actualTemperature: 'actual_temperature',
+      minTemperature: 'min_temperature',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.storeWeather(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.city'));
+  });
+  it('should throws a EmptyFieldError if params.maxTemperature is empty in storeWeather method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: 'actual_temperature',
+      minTemperature: 'min_temperature',
+      maxTemperature: '',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.storeWeather(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.maxTemperature'));
+  });
+  it('should throws a EmptyFieldError if params.minTemperature is empty in storeWeather method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: 'actual_temperature',
+      minTemperature: '',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.storeWeather(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.minTemperature'));
+  });
+  it('should throws a EmptyFieldError if params.actualTemperature is empty in storeWeather method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: '',
+      minTemperature: 'min_temperature',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.storeWeather(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.actualTemperature'));
+  });
+  it('should throws a EmptyFieldError if params.cityId is empty in storeWeather method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: 'actual_temperature',
+      minTemperature: 'min_temperature',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: ''
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.storeWeather(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.cityId'));
+  });
+  it('should collection method be receive correct params in storeWeather method', async () => {
+    const { sut } = makeSut();
+
+    await sut.storeWeather(params);
+
+    expect(firestore.collection).toBeCalledWith('fakeDB', 'consult');
+  });
+  it('should addDB method be receive correct params in storeWeather method', async () => {
+    const { sut } = makeSut();
+
+    await sut.storeWeather(params);
 
     expect(firestore.addDoc).toBeCalledWith('fakeCollection', params);
   });
