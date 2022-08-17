@@ -2,7 +2,9 @@ import React from 'react';
 import { WeatherView } from '../WeatherView';
 import * as Component from './styles';
 import { useHome } from './useHome';
-
+import { BsArrowRight } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { useTheme } from 'styled-components';
 export function Home () {
   const {
     changeCityWeather,
@@ -38,6 +40,16 @@ export function Home () {
             minTemparature={weather?.minTemperature}
            />
             )}
+            <Component.NavContainer>
+             <Component.NavItem to="/ranking">
+            <Component.NavText>
+
+                 ranking
+
+            </Component.NavText>
+            <BsArrowRight/>
+             </Component.NavItem>
+            </Component.NavContainer>
             </Component.Card>
 
         </Component.Container>

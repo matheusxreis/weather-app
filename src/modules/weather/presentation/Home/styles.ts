@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 type ButtonProps = {
@@ -67,6 +68,47 @@ export const Card = styled.div`
     border-radius:2px;
     filter: brightness(0.95);
     margin-top:10px;
+
+
+
+`;
+
+export const NavContainer = styled.div`
+
+display:flex;
+align-items:center;
+width:100%;
+justify-content:flex-end;
+`;
+
+export const NavText = styled.p`
+
+font-size: 16px;
+color:${({ theme }) => theme.colors.textSecondary};
+font-family: ${({ theme }) => theme.fonts.normal};
+cursor:pointer;
+
+transition: 0.5s;
+&:hover {
+    color: ${({ theme }) => theme.colors.primary};;
+}
+
+
+`;
+
+export const NavItem = styled(Link)`
+
+    display:flex;
+    align-items:center;
+    transition: 0.5s;
+    padding: 5px 24px;
+    color: ${({ theme }) => theme.colors.textSecondary};
+    text-decoration: none;
+
+&:hover {
+    color: ${({ theme }) => theme.colors.primary};;
+    }
+
 
 
 `;
