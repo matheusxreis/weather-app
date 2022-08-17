@@ -3,7 +3,7 @@
 
 ### Sobre
 
-Weather App é um aplicativo de clima, que consulta a [OpenWeatherApi](https://openweathermap.org/api) para informar o clima em 5 grandes cidades do mundo: São Paulo, Nova York, Tokyo, Paris e Amsterdam e armazena as consultas no Firebase.
+Weather App é um aplicativo de clima, que consulta a [OpenWeatherApi](https://openweathermap.org/api) para informar o clima em 5 grandes cidades do mundo: São Paulo, Nova York, Tokyo, Paris, Amsterdam e armazena as consultas no Firebase.
 
 
 ### Tecnologias utilizadas:
@@ -12,9 +12,9 @@ Weather App é um aplicativo de clima, que consulta a [OpenWeatherApi](https://o
  - **Redux**: para gerenciar os estados;
  - **Axios**: para consumir a API;
  - **Typescript**: desde o Typescript, não há porque não usá-lo;
-- **Firestore Database**: para armazenamento das últimas consultas.
-- **React Firebase Hooks**: para facilitar a atualização de dados em tempo real utilizando o firebase.
-
+- **Firestore Database**: para armazenamento das últimas consultas;
+- **React Firebase Hooks**: para facilitar a atualização de dados em tempo real utilizando o firebase;
+- **Jest**: para criação dos testes unitários.
 ### Como rodar:
 
 Para rodar a aplicação é necessário que você tenha um app registrado no Firebase e uma conta na OpenWeatherApi.
@@ -25,7 +25,7 @@ Possuindo as contas, dê um git clone.
     git clone https://github.com/matheusxreis/weather-app
 ```
 
-Em seguida, altera o nome do arquivo **.env-example** apenas para **.env** e coloque os valores correspondentes.
+Em seguida, altere o nome do arquivo **.env-example** apenas para **.env** e coloque os valores correspondentes.
 
 A BASE_URL deve ser: **https://api.openweathermap.org/data/2.5/**.
 
@@ -58,15 +58,14 @@ FB_STORAGE_BUCKET=your_firebase_storage_bucket
 FB_MESSAGING_SENDER_ID=your_firebase_messaging_sender
 FB_APP_ID=your_firebase_app_id
 ```
-Após atribuido os valores para as variáveis, basta:
+Após atribuido os valores para as variáveis, basta entrar no diretório clonado e:
 
 ```bash
 
 yarn dev
-
 ```
 
-E o projeto estará disponível para acessar na porta **8080**.
+E o projeto estará rodando na porta **8080**.
 
 Também é possível rodar via Docker:
 
@@ -74,3 +73,4 @@ Também é possível rodar via Docker:
 docker build -t app:1.0.0 .
 docker run -it -p 8080:8080 app:1.0.0
 ```
+
