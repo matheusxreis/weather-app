@@ -7,13 +7,13 @@ import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const app = initializeApp({
-  apiKey: 'AIzaSyDEN4RnHoqiqwnUoSCNgCKatxCUQJc6igI',
-  authDomain: 'weather-app-62b88.firebaseapp.com',
-  databaseURL: 'https://weather-app-62b88-default-rtdb.firebaseio.com',
-  projectId: 'weather-app-62b88',
-  storageBucket: 'weather-app-62b88.appspot.com',
-  messagingSenderId: '217388962098',
-  appId: '1:217388962098:web:fbb72742a43e0e4327872b'
+  apiKey: process.env.FB_API_KEY,
+  authDomain: process.env.FB_AUTH_DOMAIN,
+  databaseURL: process.env.FB_DATABASE_URL,
+  projectId: process.env.FB_PROJECT_ID,
+  storageBucket: process.env.FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.FB_MESSAGING_SEND_ID,
+  appId: process.env.FB_APP_ID
 });
 
 export const db = getFirestore(app);
