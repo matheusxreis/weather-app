@@ -1,10 +1,13 @@
 import React from 'react';
 import * as Component from './styles';
-import { BsFillSunriseFill as MaxIcon, BsFillSunsetFill as MinIcon, BsThermometerSun as ActualIcon } from 'react-icons/bs';
+import { BsThermometerSun as ActualIcon } from 'react-icons/bs';
+import { useTheme } from 'styled-components';
+import SunImage from '../../../../global/assets/png/sun-image.png';
+import CloudImage from '../../../../global/assets/png/cloud-image.png';
 
 type WeatherViewProps = {
     actualTemperature: string,
-    minTemparature:string,
+    minTemperature:string,
     maxTemperature:string,
     image: string,
     city:string
@@ -12,7 +15,7 @@ type WeatherViewProps = {
 
 export function WeatherView ({
   actualTemperature,
-  minTemparature,
+  minTemperature,
   maxTemperature,
   image,
   city
@@ -25,31 +28,38 @@ export function WeatherView ({
     if (Number(actualTemperature) > 24) { return 'Wow! Acho que dá pra aproveitar!'; }
     return 'Que clima, hein !?';
   }
+  function getImage () {
+    if (Number(actualTemperature) > 24) { return SunImage; }
+    return CloudImage;
+  }
 
   return (
         <Component.Container>
             <Component.DataWeatherContainer>
-            <Component.TimeNowIn>Tempo agora em: {city}. </Component.TimeNowIn>
+            <Component.TimeNowIn>Tempo agora em: <span>{city}</span>. </Component.TimeNowIn>
              <Component.PharagraphContainer>
-             <ActualIcon size={24}/>
+             <ActualIcon color={useTheme().colors.textSecondary} size={24}/>
             <Component.Pharagraph>
-                 Temperatura atual: {actualTemperature} °C.
+                 Temperatura atual:
             </Component.Pharagraph>
+            <Component.PharagraphWeatherValue>
+                 {actualTemperature} °C.
+            </Component.PharagraphWeatherValue>
              </Component.PharagraphContainer>
              <Component.PharagraphContainer>
-             <MaxIcon size={24} />
              <Component.Pharagraph>
-                 Temperatura mínima: {minTemparature} °C.
+                 Temperatura mínima:  <span> {minTemperature} °C</span>.
                   </Component.Pharagraph>
              </Component.PharagraphContainer>
              <Component.PharagraphContainer>
-             <MinIcon size={24}/>
-            <Component.Pharagraph> Temperatura máxima: {maxTemperature} °C. </Component.Pharagraph>
+            <Component.Pharagraph> Temperatura máxima: <span> {maxTemperature} °C</span>. </Component.Pharagraph>
              </Component.PharagraphContainer>
             <Component.TemperatureLabel isSun={isSun()}>
                     <Component.Pharagraph> {getTextLabel()} </Component.Pharagraph>
             </Component.TemperatureLabel>
+
             </Component.DataWeatherContainer>
+            <Component.Image src={getImage()}/>
 
         </Component.Container>
   );

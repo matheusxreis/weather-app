@@ -6,7 +6,7 @@ type ButtonProps = {
 }
 
 export const Container = styled.div`
-background: ${({ theme }) => theme.colors.backgroundSecondary};
+//background: ${({ theme }) => theme.colors.backgroundSecondary};
 `;
 
 export const Title = styled.h1`
@@ -24,10 +24,8 @@ font-family: ${({ theme }) => theme.fonts.normal};
     font-weight: 200;
 `;
 export const SelectWeatherButton = styled.button<ButtonProps>`
-
-background: ${({ isSelected, theme }) => isSelected ? theme.colors.backgroundSecondary : 'transparent'};;
+background: ${({ isSelected, theme }) => isSelected ? 'transparent' : 'transparent'};;
 color: ${({ theme, isSelected }) => theme.colors.textSecondary};
-filter:${({ isSelected }) => isSelected ? 'brightness(0.95)' : 'brightness(1)'};
 font-size: 22px;
 font-weight:150px;
 width: 150px;
@@ -36,13 +34,17 @@ border: 0px;
 border-radius:2px;
 font-family: ${({ theme }) => theme.fonts.normal};
 font-size:16px;
-
+text-decoration: ${({ isSelected }) => isSelected ? 'underline' : 'none'};
+padding:2px;
 
 transition: 0.5s;
 cursor: pointer;
+transition: 0.5s;
 &:hover {
-    filter: brightness(0.95);
-    background: ${({ theme }) => theme.colors.backgroundSecondary};
+    text-decoration: 'underline';
+    color: #000;
+
+    //background: ${({ theme }) => theme.colors.primary};
 
 }
 
@@ -57,6 +59,7 @@ export const SelectWeatherButtonContainer = styled.div`
     width:800px;
     margin: 0 auto;
     max-width:100%;
+    background: 'transparent';
 
 `;
 export const Card = styled.div`
@@ -64,8 +67,9 @@ export const Card = styled.div`
     width:1000px;
     margin: 0 auto;
     max-width:100%;
-    background: ${({ theme }) => theme.colors.backgroundSecondary};
-    border-radius:2px;
+    backdrop-filter: blur(90px);
+    //background: ${({ theme }) => theme.colors.backgroundSecondary};
+    border-radius:5px;
     filter: brightness(0.95);
     margin-top:10px;
 

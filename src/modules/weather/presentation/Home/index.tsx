@@ -35,7 +35,7 @@ export function Home () {
             city={weather?.city}
             image=''
             maxTemperature={weather?.maxTemperature}
-            minTemparature={weather?.minTemperature}
+            minTemperature={weather?.minTemperature}
            />
             )}
             <Component.NavContainer>

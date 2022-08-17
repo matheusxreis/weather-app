@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     //background: ${({ theme }) => theme.colors.backgroundSecondary};
   //  background-image:url('https://wallpaperaccess.com/full/2860353.jpg');
-  background: #212930;
+  //background: #212930;
     width:100%;
     flex-direction:column;
     padding: 0px 0px;
@@ -29,7 +29,7 @@ export const TitleContainer = styled.div`
      display: flex;
      flex-direction:column;
      align-items:center;
-     backdrop-filter: blur(60px);
+     //backdrop-filter: blur(60px);
      padding:30px;
      border-radius:7px;
 `;
