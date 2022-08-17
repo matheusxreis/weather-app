@@ -20,7 +20,8 @@ const params = {
 };
 
 const fakeDoc = {
-  data: () => 'fakeWeatherStoreParams'
+  data: () => 'fakeWeatherStoreParams',
+  id: 'fakeIdFromFakeDoc'
 };
 jest.mock('firebase/firestore', () => {
   return {
@@ -29,7 +30,9 @@ jest.mock('firebase/firestore', () => {
     getFirestore: jest.fn().mockImplementation(() => 'fakeDB'),
     query: jest.fn().mockImplementation(() => 'fakeQuery'),
     where: jest.fn().mockImplementation(() => 'fakeWhere'),
-    getDocs: jest.fn().mockImplementation(() => ([fakeDoc, fakeDoc]))
+    getDocs: jest.fn().mockImplementation(() => ([fakeDoc, fakeDoc])),
+    doc: jest.fn().mockImplementation(() => 'fakeDoc'),
+    updateDoc: jest.fn()
   };
 });
 
@@ -109,7 +112,7 @@ describe('FirebaseRepository', () => {
       .rejects
       .toThrow(new EmptyFieldError('params.cityId'));
   });
-  it('should collection method be receive correct params in storeLog method', async () => {
+  it('should collection method receive correct params in storeLog method', async () => {
     const { sut } = makeSut();
 
     await sut.storeLog(params);
@@ -211,6 +214,104 @@ describe('FirebaseRepository', () => {
     await sut.storeWeather(params);
 
     expect(firestore.addDoc).toBeCalledWith('fakeCollection', params);
+  });
+  it('should throws a EmptyFieldError if params.city is empty in updateConsult method', async () => {
+    const wrongParams = {
+      city: '',
+      actualTemperature: 'actual_temperature',
+      minTemperature: 'min_temperature',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.updateConsult(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.city'));
+  });
+  it('should throws a EmptyFieldError if params.maxTemperature is empty in updateConsult method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: 'actual_temperature',
+      minTemperature: 'min_temperature',
+      maxTemperature: '',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.updateConsult(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.maxTemperature'));
+  });
+  it('should throws a EmptyFieldError if params.minTemperature is empty in updateConsult method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: 'actual_temperature',
+      minTemperature: '',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.updateConsult(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.minTemperature'));
+  });
+  it('should throws a EmptyFieldError if params.actualTemperature is empty in updateConsult method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: '',
+      minTemperature: 'min_temperature',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: 'city_id'
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.updateConsult(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.actualTemperature'));
+  });
+  it('should throws a EmptyFieldError if params.cityId is empty in updateConsult method', async () => {
+    const wrongParams = {
+      city: 'any_city',
+      actualTemperature: 'actual_temperature',
+      minTemperature: 'min_temperature',
+      maxTemperature: 'max_temperature',
+      lastConsult: new Date().getTime(),
+      cityId: ''
+    };
+    const { sut } = makeSut();
+
+    expect(async () => await sut.updateConsult(wrongParams))
+      .rejects
+      .toThrow(new EmptyFieldError('params.cityId'));
+  });
+
+  it('should query method receive correct params in updateConsult method', async () => {
+    const { sut } = makeSut();
+
+    await sut.updateConsult(params);
+
+    expect(firestore.query).toBeCalledWith('fakeCollection', 'fakeWhere');
+  });
+  it('should doc method receive correct params in updateConsult method', async () => {
+    const { sut } = makeSut();
+
+    await sut.updateConsult(params);
+
+    expect(firestore.doc).toBeCalledWith('fakeDB', 'consult', 'fakeIdFromFakeDoc');
+  });
+
+  it('should updateDoc method receive correct params in updateConsult method', async () => {
+    const { sut } = makeSut();
+
+    await sut.updateConsult(params);
+
+    expect(firestore.updateDoc).toBeCalledWith('fakeDoc', params);
   });
   it('should throws a EmptyFiledError if cityId is empty in findConsultById method', async () => {
     const { sut } = makeSut();
