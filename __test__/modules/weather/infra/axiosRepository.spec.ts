@@ -48,7 +48,12 @@ describe('AxiosRepository', () => {
     const { sut } = makeSut();
 
     const path = await sut.getWeather(params) as unknown as string;
-    expect(path.slice(0, 30)).toBe(`weather?lat=${params.latitute}&lon=${params.longitude}&`);
+    const hasLat = path.includes(params.latitute);
+    const hasLon = path.includes(params.longitude);
+
+    expect(hasLat).toBe(true);
+    expect(hasLon).toBe(true);
+
     mockApi.mockClear();
   });
   it('should api.get returns correct response if all is ok', async () => {
